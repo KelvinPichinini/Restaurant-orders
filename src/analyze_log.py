@@ -2,24 +2,24 @@ import csv
 
 
 def get_foods(orders):
-    foods = []
+    foods = set()
     for order in orders:
         if order[1] not in foods:
-            foods.append(order[1])
+            foods.add(order[1])
     return foods
 
 
 def get_working_days(orders):
-    days = []
+    days = set()
     for order in orders:
         if order[2] not in days:
-            days.append(order[2])
+            days.add(order[2])
     return days
 
 
 def validate_file(path: str):
     if not path.endswith('.csv'):
-        raise ValueError(f"Extensão inválida: '{path}'")
+        raise FileNotFoundError(f"Extensão inválida: '{path}'")
     try:
         file = open(path)
         file.close()
@@ -67,22 +67,22 @@ def count_product_by_customer(orders, product, customer_name):
 
 
 def not_ordered_food_by_customer(orders, customer_name):
-    not_ordered = []
+    not_ordered = set()
     customer_orders = get_orders_by_customer(orders, customer_name)
     all_foods = get_foods(orders)
     for food in all_foods:
         if food not in customer_orders:
-            not_ordered.append(food)
+            not_ordered.add(food)
     return not_ordered
 
 
 def days_not_visited_by_customer(orders, customer_name):
-    not_visited = []
+    not_visited = set()
     visiting_days = get_visit_days_of_customer(orders, customer_name)
     working_days = get_working_days(orders)
     for day in working_days:
         if day not in visiting_days:
-            not_visited.append(day)
+            not_visited.add(day)
     return not_visited
 
 
