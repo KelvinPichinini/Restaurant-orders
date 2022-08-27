@@ -9,7 +9,7 @@ uma padaria.
 
 Os arquivos desenvolvidos por mim foram os seguintes:
 
- -pasta src:
+ - pasta src:
   - analyze_log.py
   - inventory_control.py
   - track_orders.py
