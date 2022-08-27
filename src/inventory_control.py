@@ -17,9 +17,13 @@ class InventoryControl:
 
     def __init__(self):
         self.inventory = dict(self.MINIMUM_INVENTORY)
+        self.available = {'hamburguer', 'pizza', 'misto-quente', 'coxinha'}
         self.orders = []
 
     def add_new_order(self, customer, order, day):
+        available_dishes = self.get_available_dishes()
+        if order not in available_dishes:
+            return False
         order_ingredients = self.INGREDIENTS[order]
         complete_order = (customer, order, day)
         for ingredient in order_ingredients:
@@ -36,3 +40,10 @@ class InventoryControl:
             else:
                 wish_list[item] = 0
         return wish_list
+
+    def get_available_dishes(self):
+        for dish in self.INGREDIENTS:
+            for ingredient in self.INGREDIENTS[dish]:
+                if self.inventory[ingredient] < 1:
+                    self.available.discard(dish)
+        return self.available
